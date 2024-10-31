@@ -298,12 +298,12 @@ func (a *ApiClient) CallApi(uri *string, httpMethod string, body interface{},
 
 func (a *ApiClient) downloadFile(response *http.Response) (*string, error) {
 	var filePath string
-    cdHeader := response.Header.Get("Content-Disposition")
+	cdHeader := response.Header.Get("Content-Disposition")
 	if len(cdHeader) != 0 {
-        _, params, err := mime.ParseMediaType(cdHeader)
-        if err != nil {
-            return nil, err
-        }
+		_, params, err := mime.ParseMediaType(cdHeader)
+		if err != nil {
+			return nil, err
+		}
 		filename := params["filename"]
 		if len(filename) == 2 {
 			filePath = filepath.Join(a.DownloadDirectory, filename)
