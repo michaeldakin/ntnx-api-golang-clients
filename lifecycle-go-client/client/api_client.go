@@ -1,4 +1,4 @@
-//The api client for lifecycle's golang SDK
+// The api client for lifecycle's golang SDK
 package client
 
 import (
@@ -9,11 +9,8 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/google/uuid"
-	"github.com/hashicorp/go-retryablehttp"
-	"github.com/sirupsen/logrus"
 	"io"
-	"io/ioutil"
+	"mime"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -21,10 +18,13 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/google/uuid"
+	"github.com/hashicorp/go-retryablehttp"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -34,31 +34,27 @@ const (
 )
 
 var (
-	jsonCheck               = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck                = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
-	uriCheck                = regexp.MustCompile(`/(?P<namespace>[-\w]+)/v\d+\.\d+(\.[a|b]\d+)?/(?P<suffix>.*)`)
-	contentDispositionCheck = regexp.MustCompile("attachment;\\s*filename=\"(.*)\"")
-	retryStatusList         = []int{408, 503, 504}
-	userAgent               = "Nutanix-lifecycle/v4.0.1-beta.1"
+	retryStatusList = []int{408, 503, 504}
+	userAgent       = "Nutanix-lifecycle/v4.0.1-beta.1"
 )
 
 /*
-  API client to handle the client-server communication, and is invariant across implementations.
+API client to handle the client-server communication, and is invariant across implementations.
 
-    Scheme (optional) : URI scheme for connecting to the cluster (HTTP or HTTPS using SSL/TLS) (default : https)
-    Host (required) : Host IPV4, IPV6 or FQDN for all http request made by this client (default : localhost)
-    Port (optional) : Port for the host to connect to make all http request (default : 9440)
-    Username (required) : Username to connect to a cluster
-    Password (required) : Password to connect to a cluster
-    Debug (optional) : flag to enable debug logging (default : empty)
-    VerifySSL (optional) : Verify SSL certificate of cluster (default: true)
-    MaxRetryAttempts (optional) : Maximum number of retry attempts to be made at a time (default: 5)
-    ReadTimeout (optional) : Read timeout for all operations in milliseconds
-    ConnectTimeout (optional) : Connection timeout for all operations in milliseconds
-    RetryInterval (optional) : Interval between successive retry attempts (default: 3 sec)
-    DownloadDirectory (optional) : Directory location on local for files to download (default: Current Directory)
-    DownloadChunkSize (optional) : Chunk size in bytes for files to download (default: 8*1024 bytes)
-    LoggerFile (optional) : Log file to write activity logs
+	Scheme (optional) : URI scheme for connecting to the cluster (HTTP or HTTPS using SSL/TLS) (default : https)
+	Host (required) : Host IPV4, IPV6 or FQDN for all http request made by this client (default : localhost)
+	Port (optional) : Port for the host to connect to make all http request (default : 9440)
+	Username (required) : Username to connect to a cluster
+	Password (required) : Password to connect to a cluster
+	Debug (optional) : flag to enable debug logging (default : empty)
+	VerifySSL (optional) : Verify SSL certificate of cluster (default: true)
+	MaxRetryAttempts (optional) : Maximum number of retry attempts to be made at a time (default: 5)
+	ReadTimeout (optional) : Read timeout for all operations in milliseconds
+	ConnectTimeout (optional) : Connection timeout for all operations in milliseconds
+	RetryInterval (optional) : Interval between successive retry attempts (default: 3 sec)
+	DownloadDirectory (optional) : Directory location on local for files to download (default: Current Directory)
+	DownloadChunkSize (optional) : Chunk size in bytes for files to download (default: 8*1024 bytes)
+	LoggerFile (optional) : Log file to write activity logs
 */
 type ApiClient struct {
 	Scheme            string `json:"scheme,omitempty"`
@@ -281,13 +277,13 @@ func (a *ApiClient) CallApi(uri *string, httpMethod string, body interface{},
 		return a.downloadFile(response)
 	}
 
-	responseBody, err := ioutil.ReadAll(response.Body)
+	responseBody, err := io.ReadAll(response.Body)
 	if err != nil {
 		a.logger.Error(err.Error())
 		return nil, err
 	}
 	response.Body.Close()
-	response.Body = ioutil.NopCloser(bytes.NewBuffer(responseBody))
+	response.Body = io.NopCloser(bytes.NewBuffer(responseBody))
 
 	if !(200 <= response.StatusCode && response.StatusCode <= 209) {
 		return nil, GenericOpenAPIError{
@@ -302,13 +298,18 @@ func (a *ApiClient) CallApi(uri *string, httpMethod string, body interface{},
 
 func (a *ApiClient) downloadFile(response *http.Response) (*string, error) {
 	var filePath string
-	if len(response.Header.Get("Content-Disposition")) != 0 {
-		filename := contentDispositionCheck.FindStringSubmatch(response.Header.Get("Content-Disposition"))
+    cdHeader := response.Header.Get("Content-Disposition")
+	if len(cdHeader) != 0 {
+        _, params, err := mime.ParseMediaType(cdHeader)
+        if err != nil {
+            return nil, err
+        }
+		filename := params["filename"]
 		if len(filename) == 2 {
-			filePath = filepath.Join(a.DownloadDirectory, filename[1])
+			filePath = filepath.Join(a.DownloadDirectory, filename)
 		}
 	} else {
-		file, err := ioutil.TempFile(a.DownloadDirectory, "")
+		file, err := os.CreateTemp(a.DownloadDirectory, "")
 		if err != nil {
 			a.logger.Errorf("Could not create a file on local for downloading: %s", err)
 			return nil, err
@@ -838,6 +839,8 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 		bodyBuf = &bytes.Buffer{}
 	}
 
+	contentTypeToLower := strings.ToLower(contentType)
+
 	if reader, ok := body.(io.Reader); ok {
 		_, err = bodyBuf.ReadFrom(reader)
 	} else if fp, ok := body.(**os.File); ok {
@@ -848,9 +851,9 @@ func setBody(body interface{}, contentType string) (bodyBuf *bytes.Buffer, err e
 		_, err = bodyBuf.WriteString(s)
 	} else if s, ok := body.(*string); ok {
 		_, err = bodyBuf.WriteString(*s)
-	} else if jsonCheck.MatchString(contentType) {
+	} else if strings.Contains("application/json", contentTypeToLower) {
 		err = json.NewEncoder(bodyBuf).Encode(body)
-	} else if xmlCheck.MatchString(contentType) {
+	} else if strings.Contains("application/xml", contentTypeToLower) {
 		err = xml.NewEncoder(bodyBuf).Encode(body)
 	}
 
@@ -902,13 +905,13 @@ type BasicAuth struct {
 }
 
 /*
-  Configuration for the Proxy Server that requests are to be routed through.
+Configuration for the Proxy Server that requests are to be routed through.
 
-    Scheme: URI Scheme for connecting to the proxy ("http", "https" or "socks5")
-    Host: Host of the proxy to which the client will connect to
-    Port: Port of the proxy to which the client will connect to
-    Username: Username to connect to the proxy
-    Password: Password to connect to the proxy
+	Scheme: URI Scheme for connecting to the proxy ("http", "https" or "socks5")
+	Host: Host of the proxy to which the client will connect to
+	Port: Port of the proxy to which the client will connect to
+	Username: Username to connect to the proxy
+	Password: Password to connect to the proxy
 */
 type Proxy struct {
 	Username string `json:"username,omitempty"`
