@@ -1,4 +1,4 @@
-module github.com/michaeldakin/ntnx-api-golang-clients-refresh/lifecycle-go-client/v4
+module github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4
 
 go 1.23.2
 
