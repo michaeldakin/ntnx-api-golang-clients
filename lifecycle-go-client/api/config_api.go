@@ -3,8 +3,8 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
+	"github.com/nutanix/ntnx-api-golang-clients-refresh/lifecycle-go-client/v4/client"
+	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client-refresh/v4/models/lifecycle/v4/resources"
 	"net/http"
 	"net/url"
 	"strings"
@@ -34,7 +34,7 @@ func NewConfigApi(apiClient *client.ApiClient) *ConfigApi {
 }
 
 // Get LCM configuration.
-func (api *ConfigApi) GetConfig(xClusterId *string, args ...map[string]interface{}) (*import1.GetConfigApiResponse, error) {
+func (api *ConfigApi) GetConfig(xClusterId *string, args ...map[string]interface{}) (*resources.GetConfigApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -74,13 +74,13 @@ func (api *ConfigApi) GetConfig(xClusterId *string, args ...map[string]interface
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.GetConfigApiResponse)
+	unmarshalledResp := new(resources.GetConfigApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }
 
 // Update LCM configuration.
-func (api *ConfigApi) UpdateConfig(body *import1.Config, xClusterId *string, args ...map[string]interface{}) (*import1.UpdateConfigApiResponse, error) {
+func (api *ConfigApi) UpdateConfig(body *resources.Config, xClusterId *string, args ...map[string]interface{}) (*resources.UpdateConfigApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -120,7 +120,7 @@ func (api *ConfigApi) UpdateConfig(body *import1.Config, xClusterId *string, arg
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.UpdateConfigApiResponse)
+	unmarshalledResp := new(resources.UpdateConfigApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }
