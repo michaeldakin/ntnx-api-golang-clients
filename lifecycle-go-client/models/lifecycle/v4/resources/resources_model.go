@@ -10,7 +10,7 @@
  */
 
 /*
-  Lifecycle resources such as reccomendations and notifications.
+Lifecycle resources such as reccomendations and notifications.
 */
 package resources
 
@@ -19,11 +19,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	import3 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/response"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
-	import4 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/error"
-	import5 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/prism/v4/config"
+	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
+	LifecycleResponse "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/response"
+	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
+	LifecycleError "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/error"
+	PrismConfig "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/prism/v4/config"
 	"time"
 )
 
@@ -77,7 +77,7 @@ type AvailableVersion struct {
 	*/
 	ReleaseNotes *string `json:"releaseNotes,omitempty"`
 
-	Status *import1.AvailableVersionStatus `json:"status,omitempty"`
+	Status *common.AvailableVersionStatus `json:"status,omitempty"`
 	/*
 	  LCM framework version present in the LCM URL.
 	*/
@@ -143,7 +143,7 @@ type Config struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 	/*
 	  List of entities for which One-Click upgrades are supported.
 	*/
@@ -276,7 +276,7 @@ type DependentEntity struct {
 	/*
 	  Information of the dependent entity versions for this available entity.
 	*/
-	DependentVersions []import3.KVPair `json:"dependentVersions,omitempty"`
+	DependentVersions []config.KVPair `json:"dependentVersions,omitempty"`
 	/*
 	  LCM entity class.
 	*/
@@ -286,7 +286,7 @@ type DependentEntity struct {
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -302,7 +302,7 @@ type DependentEntity struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 	/*
 	  A globally unique identifier that represents the tenant that owns this entity. The system automatically assigns it, and it and is immutable from an API consumer perspective (some use cases may cause this Id to change - For instance, a use case may require the transfer of ownership of the entity, but these cases are handled automatically on the server).
 	*/
@@ -337,7 +337,7 @@ type DeployableVersion struct {
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -353,7 +353,7 @@ type DeployableVersion struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 	/*
 	  Entity target version.
 	*/
@@ -363,7 +363,7 @@ type DeployableVersion struct {
 	*/
 	TenantId *string `json:"tenantId,omitempty"`
 
-	UpdateDependencies []import1.EntityUpdateSpec `json:"updateDependencies,omitempty"`
+	UpdateDependencies []common.EntityUpdateSpec `json:"updateDependencies,omitempty"`
 }
 
 func NewDeployableVersion() *DeployableVersion {
@@ -412,13 +412,13 @@ type Entity struct {
 	/*
 	  Detailed information for the LCM entity. For example, firmware entities contain additional information about NIC and so on.
 	*/
-	EntityDetails []import3.KVPair `json:"entityDetails,omitempty"`
+	EntityDetails []config.KVPair `json:"entityDetails,omitempty"`
 	/*
 	  LCM entity model.
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -442,13 +442,13 @@ type Entity struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 
-	LocationInfo *import1.LocationInfo `json:"locationInfo,omitempty"`
+	LocationInfo *common.LocationInfo `json:"locationInfo,omitempty"`
 	/*
 	  A list of sub-entities applicable to the entity.
 	*/
-	SubEntities []import1.EntityBaseModel `json:"subEntities,omitempty"`
+	SubEntities []common.EntityBaseModel `json:"subEntities,omitempty"`
 	/*
 	  The requested update version of an LCM entity.
 	*/
@@ -521,7 +521,7 @@ type GetConfigApiResponse struct {
 
 	Data *OneOfGetConfigApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewGetConfigApiResponse() *GetConfigApiResponse {
@@ -571,7 +571,7 @@ type GetEntityByIdApiResponse struct {
 
 	Data *OneOfGetEntityByIdApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewGetEntityByIdApiResponse() *GetEntityByIdApiResponse {
@@ -621,7 +621,7 @@ type GetNotificationsByIdApiResponse struct {
 
 	Data *OneOfGetNotificationsByIdApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewGetNotificationsByIdApiResponse() *GetNotificationsByIdApiResponse {
@@ -671,7 +671,7 @@ type GetRecommendationByIdApiResponse struct {
 
 	Data *OneOfGetRecommendationByIdApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewGetRecommendationByIdApiResponse() *GetRecommendationByIdApiResponse {
@@ -721,7 +721,7 @@ type GetStatusApiResponse struct {
 
 	Data *OneOfGetStatusApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewGetStatusApiResponse() *GetStatusApiResponse {
@@ -777,7 +777,7 @@ type Image struct {
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -799,7 +799,7 @@ type Image struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 	/*
 	  Release notes for the LCM image.
 	*/
@@ -809,7 +809,7 @@ type Image struct {
 	*/
 	SpecVersion *string `json:"specVersion"`
 
-	Status *import1.AvailableVersionStatus `json:"status,omitempty"`
+	Status *common.AvailableVersionStatus `json:"status,omitempty"`
 	/*
 	  A globally unique identifier that represents the tenant that owns this entity. The system automatically assigns it, and it and is immutable from an API consumer perspective (some use cases may cause this Id to change - For instance, a use case may require the transfer of ownership of the entity, but these cases are handled automatically on the server).
 	*/
@@ -856,7 +856,7 @@ type ImageFile struct {
 	*/
 	Checksum *string `json:"checksum"`
 
-	ChecksumType *import1.CheckSumType `json:"checksumType"`
+	ChecksumType *common.CheckSumType `json:"checksumType"`
 	/*
 	  Image file global catalog item UUID.
 	*/
@@ -879,9 +879,9 @@ func (p *ImageFile) MarshalJSON() ([]byte, error) {
 	type ImageFileProxy ImageFile
 	return json.Marshal(struct {
 		*ImageFileProxy
-		Checksum     *string               `json:"checksum,omitempty"`
-		ChecksumType *import1.CheckSumType `json:"checksumType,omitempty"`
-		SizeBytes    *int64                `json:"sizeBytes,omitempty"`
+		Checksum     *string              `json:"checksum,omitempty"`
+		ChecksumType *common.CheckSumType `json:"checksumType,omitempty"`
+		SizeBytes    *int64               `json:"sizeBytes,omitempty"`
 	}{
 		ImageFileProxy: (*ImageFileProxy)(p),
 		Checksum:       p.Checksum,
@@ -914,7 +914,7 @@ type InProgressOpInfo struct {
 	*/
 	OperationId *string `json:"operationId,omitempty"`
 
-	OperationType *import1.OperationType `json:"operationType,omitempty"`
+	OperationType *common.OperationType `json:"operationType,omitempty"`
 }
 
 func NewInProgressOpInfo() *InProgressOpInfo {
@@ -943,7 +943,7 @@ type ListEntitiesApiResponse struct {
 
 	Data *OneOfListEntitiesApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewListEntitiesApiResponse() *ListEntitiesApiResponse {
@@ -993,7 +993,7 @@ type ListImagesApiResponse struct {
 
 	Data *OneOfListImagesApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewListImagesApiResponse() *ListImagesApiResponse {
@@ -1047,7 +1047,7 @@ type Notification struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 
 	Notifications []NotificationItem `json:"notifications,omitempty"`
 	/*
@@ -1115,7 +1115,7 @@ type NotificationItem struct {
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -1129,15 +1129,15 @@ type NotificationItem struct {
 	*/
 	HardwareFamily *string `json:"hardwareFamily,omitempty"`
 
-	HypervisorType *import1.HypervisorType `json:"hypervisorType,omitempty"`
+	HypervisorType *common.HypervisorType `json:"hypervisorType,omitempty"`
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 
-	LocationInfo *import1.LocationInfo `json:"locationInfo,omitempty"`
+	LocationInfo *common.LocationInfo `json:"locationInfo,omitempty"`
 
-	NotificationType *import1.NotificationType `json:"notificationType,omitempty"`
+	NotificationType *common.NotificationType `json:"notificationType,omitempty"`
 	/*
 	  A globally unique identifier that represents the tenant that owns this entity. The system automatically assigns it, and it and is immutable from an API consumer perspective (some use cases may cause this Id to change - For instance, a use case may require the transfer of ownership of the entity, but these cases are handled automatically on the server).
 	*/
@@ -1182,7 +1182,7 @@ type RecommendationResult struct {
 	/*
 	  List of entity update objects for getting recommendations.
 	*/
-	EntityUpdateSpecs []import1.EntityUpdateSpec `json:"entityUpdateSpecs,omitempty"`
+	EntityUpdateSpecs []common.EntityUpdateSpec `json:"entityUpdateSpecs,omitempty"`
 	/*
 	  A globally unique identifier of an instance that is suitable for external consumption.
 	*/
@@ -1190,7 +1190,7 @@ type RecommendationResult struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 	/*
 	  List of modified LCM entities from the input recommendations specification.
 	*/
@@ -1415,7 +1415,7 @@ type TargetEntity struct {
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -1431,9 +1431,9 @@ type TargetEntity struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 
-	LocationInfo *import1.LocationInfo `json:"locationInfo,omitempty"`
+	LocationInfo *common.LocationInfo `json:"locationInfo,omitempty"`
 	/*
 	  A globally unique identifier that represents the tenant that owns this entity. The system automatically assigns it, and it and is immutable from an API consumer perspective (some use cases may cause this Id to change - For instance, a use case may require the transfer of ownership of the entity, but these cases are handled automatically on the server).
 	*/
@@ -1481,7 +1481,7 @@ type UpdateConfigApiResponse struct {
 
 	Data *OneOfUpdateConfigApiResponseData `json:"data,omitempty"`
 
-	Metadata *import2.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewUpdateConfigApiResponse() *UpdateConfigApiResponse {
@@ -1533,7 +1533,7 @@ type UpdatedTargetEntity struct {
 	*/
 	EntityModel *string `json:"entityModel,omitempty"`
 
-	EntityType *import1.EntityType `json:"entityType,omitempty"`
+	EntityType *common.EntityType `json:"entityType,omitempty"`
 	/*
 	  Current version of an LCM entity.
 	*/
@@ -1549,9 +1549,9 @@ type UpdatedTargetEntity struct {
 	/*
 	  A HATEOAS style link for the response.  Each link contains a user-friendly name identifying the link and an address for retrieving the particular resource.
 	*/
-	Links []import2.ApiLink `json:"links,omitempty"`
+	Links []LifecycleResponse.ApiLink `json:"links,omitempty"`
 
-	LocationInfo *import1.LocationInfo `json:"locationInfo,omitempty"`
+	LocationInfo *common.LocationInfo `json:"locationInfo,omitempty"`
 	/*
 	  A globally unique identifier that represents the tenant that owns this entity. The system automatically assigns it, and it and is immutable from an API consumer perspective (some use cases may cause this Id to change - For instance, a use case may require the transfer of ownership of the entity, but these cases are handled automatically on the server).
 	*/
@@ -1607,10 +1607,10 @@ func NewUpdatedTargetEntityResult() *UpdatedTargetEntityResult {
 }
 
 type OneOfGetRecommendationByIdApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 *RecommendationResult  `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 *RecommendationResult         `json:"-"`
 }
 
 func NewOneOfGetRecommendationByIdApiResponseData() *OneOfGetRecommendationByIdApiResponseData {
@@ -1625,11 +1625,11 @@ func (p *OneOfGetRecommendationByIdApiResponseData) SetValue(v interface{}) erro
 		return errors.New(fmt.Sprintf("OneOfGetRecommendationByIdApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -1668,11 +1668,11 @@ func (p *OneOfGetRecommendationByIdApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfGetRecommendationByIdApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -1718,10 +1718,10 @@ func (p *OneOfGetRecommendationByIdApiResponseData) MarshalJSON() ([]byte, error
 }
 
 type OneOfGetStatusApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 *StatusInfo            `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 *StatusInfo                   `json:"-"`
 }
 
 func NewOneOfGetStatusApiResponseData() *OneOfGetStatusApiResponseData {
@@ -1736,11 +1736,11 @@ func (p *OneOfGetStatusApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfGetStatusApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -1779,11 +1779,11 @@ func (p *OneOfGetStatusApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfGetStatusApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -1829,10 +1829,10 @@ func (p *OneOfGetStatusApiResponseData) MarshalJSON() ([]byte, error) {
 }
 
 type OneOfListImagesApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 []Image                `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 []Image                       `json:"-"`
 }
 
 func NewOneOfListImagesApiResponseData() *OneOfListImagesApiResponseData {
@@ -1847,11 +1847,11 @@ func (p *OneOfListImagesApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfListImagesApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -1887,11 +1887,11 @@ func (p *OneOfListImagesApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfListImagesApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -1936,12 +1936,12 @@ func (p *OneOfListImagesApiResponseData) MarshalJSON() ([]byte, error) {
 }
 
 type OneOfRecommendationSpecRecommendationSpec struct {
-	Discriminator *string                    `json:"-"`
-	ObjectType_   *string                    `json:"-"`
-	oneOfType2002 []TargetEntity             `json:"-"`
-	oneOfType2001 []import1.EntityType       `json:"-"`
-	oneOfType2004 []import1.EntityDeploySpec `json:"-"`
-	oneOfType2003 []import1.EntityUpdateSpec `json:"-"`
+	Discriminator *string                   `json:"-"`
+	ObjectType_   *string                   `json:"-"`
+	oneOfType2002 []TargetEntity            `json:"-"`
+	oneOfType2001 []common.EntityType       `json:"-"`
+	oneOfType2004 []common.EntityDeploySpec `json:"-"`
+	oneOfType2003 []common.EntityUpdateSpec `json:"-"`
 }
 
 func NewOneOfRecommendationSpecRecommendationSpec() *OneOfRecommendationSpecRecommendationSpec {
@@ -1966,8 +1966,8 @@ func (p *OneOfRecommendationSpecRecommendationSpec) SetValue(v interface{}) erro
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = "List<lifecycle.v4.resources.TargetEntity>"
-	case []import1.EntityType:
-		p.oneOfType2001 = v.([]import1.EntityType)
+	case []common.EntityType:
+		p.oneOfType2001 = v.([]common.EntityType)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -1976,8 +1976,8 @@ func (p *OneOfRecommendationSpecRecommendationSpec) SetValue(v interface{}) erro
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = "List<lifecycle.v4.common.EntityType>"
-	case []import1.EntityDeploySpec:
-		p.oneOfType2004 = v.([]import1.EntityDeploySpec)
+	case []common.EntityDeploySpec:
+		p.oneOfType2004 = v.([]common.EntityDeploySpec)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -1986,8 +1986,8 @@ func (p *OneOfRecommendationSpecRecommendationSpec) SetValue(v interface{}) erro
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = "List<lifecycle.v4.common.EntityDeploySpec>"
-	case []import1.EntityUpdateSpec:
-		p.oneOfType2003 = v.([]import1.EntityUpdateSpec)
+	case []common.EntityUpdateSpec:
+		p.oneOfType2003 = v.([]common.EntityUpdateSpec)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2036,7 +2036,7 @@ func (p *OneOfRecommendationSpecRecommendationSpec) UnmarshalJSON(b []byte) erro
 
 		}
 	}
-	vOneOfType2001 := new([]import1.EntityType)
+	vOneOfType2001 := new([]common.EntityType)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		p.oneOfType2001 = *vOneOfType2001
 		if nil == p.Discriminator {
@@ -2049,7 +2049,7 @@ func (p *OneOfRecommendationSpecRecommendationSpec) UnmarshalJSON(b []byte) erro
 		*p.ObjectType_ = "List<lifecycle.v4.common.EntityType>"
 		return nil
 	}
-	vOneOfType2004 := new([]import1.EntityDeploySpec)
+	vOneOfType2004 := new([]common.EntityDeploySpec)
 	if err := json.Unmarshal(b, vOneOfType2004); err == nil {
 
 		if len(*vOneOfType2004) == 0 || "lifecycle.v4.common.EntityDeploySpec" == *((*vOneOfType2004)[0].ObjectType_) {
@@ -2066,7 +2066,7 @@ func (p *OneOfRecommendationSpecRecommendationSpec) UnmarshalJSON(b []byte) erro
 
 		}
 	}
-	vOneOfType2003 := new([]import1.EntityUpdateSpec)
+	vOneOfType2003 := new([]common.EntityUpdateSpec)
 	if err := json.Unmarshal(b, vOneOfType2003); err == nil {
 
 		if len(*vOneOfType2003) == 0 || "lifecycle.v4.common.EntityUpdateSpec" == *((*vOneOfType2003)[0].ObjectType_) {
@@ -2103,10 +2103,10 @@ func (p *OneOfRecommendationSpecRecommendationSpec) MarshalJSON() ([]byte, error
 }
 
 type OneOfGetEntityByIdApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 *Entity                `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 *Entity                       `json:"-"`
 }
 
 func NewOneOfGetEntityByIdApiResponseData() *OneOfGetEntityByIdApiResponseData {
@@ -2121,11 +2121,11 @@ func (p *OneOfGetEntityByIdApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfGetEntityByIdApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2164,11 +2164,11 @@ func (p *OneOfGetEntityByIdApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfGetEntityByIdApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -2214,10 +2214,10 @@ func (p *OneOfGetEntityByIdApiResponseData) MarshalJSON() ([]byte, error) {
 }
 
 type OneOfGetConfigApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 *Config                `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 *Config                       `json:"-"`
 }
 
 func NewOneOfGetConfigApiResponseData() *OneOfGetConfigApiResponseData {
@@ -2232,11 +2232,11 @@ func (p *OneOfGetConfigApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfGetConfigApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2275,11 +2275,11 @@ func (p *OneOfGetConfigApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfGetConfigApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -2325,10 +2325,10 @@ func (p *OneOfGetConfigApiResponseData) MarshalJSON() ([]byte, error) {
 }
 
 type OneOfGetNotificationsByIdApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType2001 *Notification          `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType2001 *Notification                 `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
 }
 
 func NewOneOfGetNotificationsByIdApiResponseData() *OneOfGetNotificationsByIdApiResponseData {
@@ -2356,11 +2356,11 @@ func (p *OneOfGetNotificationsByIdApiResponseData) SetValue(v interface{}) error
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType2001.ObjectType_
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2404,11 +2404,11 @@ func (p *OneOfGetNotificationsByIdApiResponseData) UnmarshalJSON(b []byte) error
 			return nil
 		}
 	}
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -2436,10 +2436,10 @@ func (p *OneOfGetNotificationsByIdApiResponseData) MarshalJSON() ([]byte, error)
 }
 
 type OneOfListEntitiesApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 []Entity               `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 []Entity                      `json:"-"`
 }
 
 func NewOneOfListEntitiesApiResponseData() *OneOfListEntitiesApiResponseData {
@@ -2454,11 +2454,11 @@ func (p *OneOfListEntitiesApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfListEntitiesApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2494,11 +2494,11 @@ func (p *OneOfListEntitiesApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfListEntitiesApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -2543,10 +2543,10 @@ func (p *OneOfListEntitiesApiResponseData) MarshalJSON() ([]byte, error) {
 }
 
 type OneOfUpdateConfigApiResponseData struct {
-	Discriminator *string                `json:"-"`
-	ObjectType_   *string                `json:"-"`
-	oneOfType400  *import4.ErrorResponse `json:"-"`
-	oneOfType2001 *import5.TaskReference `json:"-"`
+	Discriminator *string                       `json:"-"`
+	ObjectType_   *string                       `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
+	oneOfType2001 *PrismConfig.TaskReference    `json:"-"`
 }
 
 func NewOneOfUpdateConfigApiResponseData() *OneOfUpdateConfigApiResponseData {
@@ -2561,11 +2561,11 @@ func (p *OneOfUpdateConfigApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfUpdateConfigApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import4.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import4.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import4.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2574,11 +2574,11 @@ func (p *OneOfUpdateConfigApiResponseData) SetValue(v interface{}) error {
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType400.ObjectType_
-	case import5.TaskReference:
+	case PrismConfig.TaskReference:
 		if nil == p.oneOfType2001 {
-			p.oneOfType2001 = new(import5.TaskReference)
+			p.oneOfType2001 = new(PrismConfig.TaskReference)
 		}
-		*p.oneOfType2001 = v.(import5.TaskReference)
+		*p.oneOfType2001 = v.(PrismConfig.TaskReference)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -2604,11 +2604,11 @@ func (p *OneOfUpdateConfigApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfUpdateConfigApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType400 := new(import4.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import4.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -2622,11 +2622,11 @@ func (p *OneOfUpdateConfigApiResponseData) UnmarshalJSON(b []byte) error {
 			return nil
 		}
 	}
-	vOneOfType2001 := new(import5.TaskReference)
+	vOneOfType2001 := new(PrismConfig.TaskReference)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		if "prism.v4.config.TaskReference" == *vOneOfType2001.ObjectType_ {
 			if nil == p.oneOfType2001 {
-				p.oneOfType2001 = new(import5.TaskReference)
+				p.oneOfType2001 = new(PrismConfig.TaskReference)
 			}
 			*p.oneOfType2001 = *vOneOfType2001
 			if nil == p.Discriminator {

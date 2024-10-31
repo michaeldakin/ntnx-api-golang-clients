@@ -18,9 +18,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	import3 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/response"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/error"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/prism/v4/config"
+	LifecycleResponse "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/response"
+	LifecycleError "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/error"
+	PrismConfig "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/prism/v4/config"
 )
 
 /*
@@ -39,7 +39,7 @@ type ComputeNotificationsApiResponse struct {
 
 	Data *OneOfComputeNotificationsApiResponseData `json:"data,omitempty"`
 
-	Metadata *import3.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewComputeNotificationsApiResponse() *ComputeNotificationsApiResponse {
@@ -89,7 +89,7 @@ type ComputeRecommendationsApiResponse struct {
 
 	Data *OneOfComputeRecommendationsApiResponseData `json:"data,omitempty"`
 
-	Metadata *import3.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewComputeRecommendationsApiResponse() *ComputeRecommendationsApiResponse {
@@ -139,7 +139,7 @@ type InventoryApiResponse struct {
 
 	Data *OneOfInventoryApiResponseData `json:"data,omitempty"`
 
-	Metadata *import3.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewInventoryApiResponse() *InventoryApiResponse {
@@ -189,7 +189,7 @@ type PrechecksApiResponse struct {
 
 	Data *OneOfPrechecksApiResponseData `json:"data,omitempty"`
 
-	Metadata *import3.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewPrechecksApiResponse() *PrechecksApiResponse {
@@ -239,7 +239,7 @@ type UpgradeApiResponse struct {
 
 	Data *OneOfUpgradeApiResponseData `json:"data,omitempty"`
 
-	Metadata *import3.ApiResponseMetadata `json:"metadata,omitempty"`
+	Metadata *LifecycleResponse.ApiResponseMetadata `json:"metadata,omitempty"`
 }
 
 func NewUpgradeApiResponse() *UpgradeApiResponse {
@@ -276,8 +276,8 @@ func (p *UpgradeApiResponse) SetData(v interface{}) error {
 type OneOfUpgradeApiResponseData struct {
 	Discriminator *string                `json:"-"`
 	ObjectType_   *string                `json:"-"`
-	oneOfType2001 *import1.TaskReference `json:"-"`
-	oneOfType400  *import2.ErrorResponse `json:"-"`
+	oneOfType2001 *PrismConfig.TaskReference `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
 }
 
 func NewOneOfUpgradeApiResponseData() *OneOfUpgradeApiResponseData {
@@ -292,11 +292,11 @@ func (p *OneOfUpgradeApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfUpgradeApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import1.TaskReference:
+	case PrismConfig.TaskReference:
 		if nil == p.oneOfType2001 {
-			p.oneOfType2001 = new(import1.TaskReference)
+			p.oneOfType2001 = new(PrismConfig.TaskReference)
 		}
-		*p.oneOfType2001 = v.(import1.TaskReference)
+		*p.oneOfType2001 = v.(PrismConfig.TaskReference)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -305,11 +305,11 @@ func (p *OneOfUpgradeApiResponseData) SetValue(v interface{}) error {
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType2001.ObjectType_
-	case import2.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import2.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import2.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -335,11 +335,11 @@ func (p *OneOfUpgradeApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfUpgradeApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType2001 := new(import1.TaskReference)
+	vOneOfType2001 := new(PrismConfig.TaskReference)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		if "prism.v4.config.TaskReference" == *vOneOfType2001.ObjectType_ {
 			if nil == p.oneOfType2001 {
-				p.oneOfType2001 = new(import1.TaskReference)
+				p.oneOfType2001 = new(PrismConfig.TaskReference)
 			}
 			*p.oneOfType2001 = *vOneOfType2001
 			if nil == p.Discriminator {
@@ -353,11 +353,11 @@ func (p *OneOfUpgradeApiResponseData) UnmarshalJSON(b []byte) error {
 			return nil
 		}
 	}
-	vOneOfType400 := new(import2.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import2.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -387,8 +387,8 @@ func (p *OneOfUpgradeApiResponseData) MarshalJSON() ([]byte, error) {
 type OneOfComputeNotificationsApiResponseData struct {
 	Discriminator *string                `json:"-"`
 	ObjectType_   *string                `json:"-"`
-	oneOfType2001 *import1.TaskReference `json:"-"`
-	oneOfType400  *import2.ErrorResponse `json:"-"`
+	oneOfType2001 *PrismConfig.TaskReference `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
 }
 
 func NewOneOfComputeNotificationsApiResponseData() *OneOfComputeNotificationsApiResponseData {
@@ -403,11 +403,11 @@ func (p *OneOfComputeNotificationsApiResponseData) SetValue(v interface{}) error
 		return errors.New(fmt.Sprintf("OneOfComputeNotificationsApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import1.TaskReference:
+	case PrismConfig.TaskReference:
 		if nil == p.oneOfType2001 {
-			p.oneOfType2001 = new(import1.TaskReference)
+			p.oneOfType2001 = new(PrismConfig.TaskReference)
 		}
-		*p.oneOfType2001 = v.(import1.TaskReference)
+		*p.oneOfType2001 = v.(PrismConfig.TaskReference)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -416,11 +416,11 @@ func (p *OneOfComputeNotificationsApiResponseData) SetValue(v interface{}) error
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType2001.ObjectType_
-	case import2.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import2.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import2.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -446,11 +446,11 @@ func (p *OneOfComputeNotificationsApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfComputeNotificationsApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType2001 := new(import1.TaskReference)
+	vOneOfType2001 := new(PrismConfig.TaskReference)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		if "prism.v4.config.TaskReference" == *vOneOfType2001.ObjectType_ {
 			if nil == p.oneOfType2001 {
-				p.oneOfType2001 = new(import1.TaskReference)
+				p.oneOfType2001 = new(PrismConfig.TaskReference)
 			}
 			*p.oneOfType2001 = *vOneOfType2001
 			if nil == p.Discriminator {
@@ -464,11 +464,11 @@ func (p *OneOfComputeNotificationsApiResponseData) UnmarshalJSON(b []byte) error
 			return nil
 		}
 	}
-	vOneOfType400 := new(import2.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import2.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -498,8 +498,8 @@ func (p *OneOfComputeNotificationsApiResponseData) MarshalJSON() ([]byte, error)
 type OneOfPrechecksApiResponseData struct {
 	Discriminator *string                `json:"-"`
 	ObjectType_   *string                `json:"-"`
-	oneOfType2001 *import1.TaskReference `json:"-"`
-	oneOfType400  *import2.ErrorResponse `json:"-"`
+	oneOfType2001 *PrismConfig.TaskReference `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
 }
 
 func NewOneOfPrechecksApiResponseData() *OneOfPrechecksApiResponseData {
@@ -514,11 +514,11 @@ func (p *OneOfPrechecksApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfPrechecksApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import1.TaskReference:
+	case PrismConfig.TaskReference:
 		if nil == p.oneOfType2001 {
-			p.oneOfType2001 = new(import1.TaskReference)
+			p.oneOfType2001 = new(PrismConfig.TaskReference)
 		}
-		*p.oneOfType2001 = v.(import1.TaskReference)
+		*p.oneOfType2001 = v.(PrismConfig.TaskReference)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -527,11 +527,11 @@ func (p *OneOfPrechecksApiResponseData) SetValue(v interface{}) error {
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType2001.ObjectType_
-	case import2.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import2.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import2.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -557,11 +557,11 @@ func (p *OneOfPrechecksApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfPrechecksApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType2001 := new(import1.TaskReference)
+	vOneOfType2001 := new(PrismConfig.TaskReference)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		if "prism.v4.config.TaskReference" == *vOneOfType2001.ObjectType_ {
 			if nil == p.oneOfType2001 {
-				p.oneOfType2001 = new(import1.TaskReference)
+				p.oneOfType2001 = new(PrismConfig.TaskReference)
 			}
 			*p.oneOfType2001 = *vOneOfType2001
 			if nil == p.Discriminator {
@@ -575,11 +575,11 @@ func (p *OneOfPrechecksApiResponseData) UnmarshalJSON(b []byte) error {
 			return nil
 		}
 	}
-	vOneOfType400 := new(import2.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import2.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -609,8 +609,8 @@ func (p *OneOfPrechecksApiResponseData) MarshalJSON() ([]byte, error) {
 type OneOfInventoryApiResponseData struct {
 	Discriminator *string                `json:"-"`
 	ObjectType_   *string                `json:"-"`
-	oneOfType2001 *import1.TaskReference `json:"-"`
-	oneOfType400  *import2.ErrorResponse `json:"-"`
+	oneOfType2001 *PrismConfig.TaskReference `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
 }
 
 func NewOneOfInventoryApiResponseData() *OneOfInventoryApiResponseData {
@@ -625,11 +625,11 @@ func (p *OneOfInventoryApiResponseData) SetValue(v interface{}) error {
 		return errors.New(fmt.Sprintf("OneOfInventoryApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import1.TaskReference:
+	case PrismConfig.TaskReference:
 		if nil == p.oneOfType2001 {
-			p.oneOfType2001 = new(import1.TaskReference)
+			p.oneOfType2001 = new(PrismConfig.TaskReference)
 		}
-		*p.oneOfType2001 = v.(import1.TaskReference)
+		*p.oneOfType2001 = v.(PrismConfig.TaskReference)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -638,11 +638,11 @@ func (p *OneOfInventoryApiResponseData) SetValue(v interface{}) error {
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType2001.ObjectType_
-	case import2.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import2.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import2.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -668,11 +668,11 @@ func (p *OneOfInventoryApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfInventoryApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType2001 := new(import1.TaskReference)
+	vOneOfType2001 := new(PrismConfig.TaskReference)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		if "prism.v4.config.TaskReference" == *vOneOfType2001.ObjectType_ {
 			if nil == p.oneOfType2001 {
-				p.oneOfType2001 = new(import1.TaskReference)
+				p.oneOfType2001 = new(PrismConfig.TaskReference)
 			}
 			*p.oneOfType2001 = *vOneOfType2001
 			if nil == p.Discriminator {
@@ -686,11 +686,11 @@ func (p *OneOfInventoryApiResponseData) UnmarshalJSON(b []byte) error {
 			return nil
 		}
 	}
-	vOneOfType400 := new(import2.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import2.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {
@@ -720,8 +720,8 @@ func (p *OneOfInventoryApiResponseData) MarshalJSON() ([]byte, error) {
 type OneOfComputeRecommendationsApiResponseData struct {
 	Discriminator *string                `json:"-"`
 	ObjectType_   *string                `json:"-"`
-	oneOfType2001 *import1.TaskReference `json:"-"`
-	oneOfType400  *import2.ErrorResponse `json:"-"`
+	oneOfType2001 *PrismConfig.TaskReference `json:"-"`
+	oneOfType400  *LifecycleError.ErrorResponse `json:"-"`
 }
 
 func NewOneOfComputeRecommendationsApiResponseData() *OneOfComputeRecommendationsApiResponseData {
@@ -736,11 +736,11 @@ func (p *OneOfComputeRecommendationsApiResponseData) SetValue(v interface{}) err
 		return errors.New(fmt.Sprintf("OneOfComputeRecommendationsApiResponseData is nil"))
 	}
 	switch v.(type) {
-	case import1.TaskReference:
+	case PrismConfig.TaskReference:
 		if nil == p.oneOfType2001 {
-			p.oneOfType2001 = new(import1.TaskReference)
+			p.oneOfType2001 = new(PrismConfig.TaskReference)
 		}
-		*p.oneOfType2001 = v.(import1.TaskReference)
+		*p.oneOfType2001 = v.(PrismConfig.TaskReference)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -749,11 +749,11 @@ func (p *OneOfComputeRecommendationsApiResponseData) SetValue(v interface{}) err
 			p.ObjectType_ = new(string)
 		}
 		*p.ObjectType_ = *p.oneOfType2001.ObjectType_
-	case import2.ErrorResponse:
+	case LifecycleError.ErrorResponse:
 		if nil == p.oneOfType400 {
-			p.oneOfType400 = new(import2.ErrorResponse)
+			p.oneOfType400 = new(LifecycleError.ErrorResponse)
 		}
-		*p.oneOfType400 = v.(import2.ErrorResponse)
+		*p.oneOfType400 = v.(LifecycleError.ErrorResponse)
 		if nil == p.Discriminator {
 			p.Discriminator = new(string)
 		}
@@ -779,11 +779,11 @@ func (p *OneOfComputeRecommendationsApiResponseData) GetValue() interface{} {
 }
 
 func (p *OneOfComputeRecommendationsApiResponseData) UnmarshalJSON(b []byte) error {
-	vOneOfType2001 := new(import1.TaskReference)
+	vOneOfType2001 := new(PrismConfig.TaskReference)
 	if err := json.Unmarshal(b, vOneOfType2001); err == nil {
 		if "prism.v4.config.TaskReference" == *vOneOfType2001.ObjectType_ {
 			if nil == p.oneOfType2001 {
-				p.oneOfType2001 = new(import1.TaskReference)
+				p.oneOfType2001 = new(PrismConfig.TaskReference)
 			}
 			*p.oneOfType2001 = *vOneOfType2001
 			if nil == p.Discriminator {
@@ -797,11 +797,11 @@ func (p *OneOfComputeRecommendationsApiResponseData) UnmarshalJSON(b []byte) err
 			return nil
 		}
 	}
-	vOneOfType400 := new(import2.ErrorResponse)
+	vOneOfType400 := new(LifecycleError.ErrorResponse)
 	if err := json.Unmarshal(b, vOneOfType400); err == nil {
 		if "lifecycle.v4.error.ErrorResponse" == *vOneOfType400.ObjectType_ {
 			if nil == p.oneOfType400 {
-				p.oneOfType400 = new(import2.ErrorResponse)
+				p.oneOfType400 = new(LifecycleError.ErrorResponse)
 			}
 			*p.oneOfType400 = *vOneOfType400
 			if nil == p.Discriminator {

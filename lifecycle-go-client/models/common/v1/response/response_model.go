@@ -15,7 +15,7 @@
 package response
 
 import (
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
+	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
 )
 
 /*
@@ -59,11 +59,11 @@ type ApiResponseMetadata struct {
 	/*
 	  An array of entity-specific metadata
 	*/
-	ExtraInfo []import1.KVPair `json:"extraInfo,omitempty"`
+	ExtraInfo []config.KVPair `json:"extraInfo,omitempty"`
 	/*
 	  An array of flags that may indicate the status of the response. For example, a flag with the name 'isPaginated' and value 'false', indicates that the response is not paginated.
 	*/
-	Flags []import1.Flag `json:"flags,omitempty"`
+	Flags []config.Flag `json:"flags,omitempty"`
 	/*
 	  An array of HATEOAS style links for the response that may also include pagination links for list operations.
 	*/
@@ -71,7 +71,7 @@ type ApiResponseMetadata struct {
 	/*
 	  Information, Warning or Error messages that might provide additional contextual information related to the operation.
 	*/
-	Messages []import1.Message `json:"messages,omitempty"`
+	Messages []config.Message `json:"messages,omitempty"`
 	/*
 	  The total number of entities that are available on the server for this type.
 	*/

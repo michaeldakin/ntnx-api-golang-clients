@@ -18,7 +18,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
+	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
 )
 
 /*
@@ -51,7 +51,7 @@ type AppMessage struct {
 	*/
 	Message *string `json:"message,omitempty"`
 
-	Severity *import1.MessageSeverity `json:"severity,omitempty"`
+	Severity *config.MessageSeverity `json:"severity,omitempty"`
 }
 
 func NewAppMessage() *AppMessage {
