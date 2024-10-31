@@ -15,7 +15,7 @@
 package response
 
 import (
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/common/v1/config"
 )
 
 /*
