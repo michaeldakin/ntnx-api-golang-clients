@@ -3,8 +3,8 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
 	"net/http"
 	"net/url"
 	"strings"
@@ -34,7 +34,7 @@ func NewEntitiesApi(apiClient *client.ApiClient) *EntitiesApi {
 }
 
 // Get details about an LCM entity.
-func (api *EntitiesApi) GetEntityById(extId *string, args ...map[string]interface{}) (*import1.GetEntityByIdApiResponse, error) {
+func (api *EntitiesApi) GetEntityById(extId *string, args ...map[string]interface{}) (*resources.GetEntityByIdApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -79,13 +79,13 @@ func (api *EntitiesApi) GetEntityById(extId *string, args ...map[string]interfac
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.GetEntityByIdApiResponse)
+	unmarshalledResp := new(resources.GetEntityByIdApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }
 
 // Query list of LCM entities.
-func (api *EntitiesApi) ListEntities(page_ *int, limit_ *int, filter_ *string, orderby_ *string, select_ *string, args ...map[string]interface{}) (*import1.ListEntitiesApiResponse, error) {
+func (api *EntitiesApi) ListEntities(page_ *int, limit_ *int, filter_ *string, orderby_ *string, select_ *string, args ...map[string]interface{}) (*resources.ListEntitiesApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -143,7 +143,7 @@ func (api *EntitiesApi) ListEntities(page_ *int, limit_ *int, filter_ *string, o
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.ListEntitiesApiResponse)
+	unmarshalledResp := new(resources.ListEntitiesApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

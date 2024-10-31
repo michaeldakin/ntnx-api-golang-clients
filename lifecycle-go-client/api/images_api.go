@@ -3,8 +3,8 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
 	"net/http"
 	"net/url"
 	"strings"
@@ -34,7 +34,7 @@ func NewImagesApi(apiClient *client.ApiClient) *ImagesApi {
 }
 
 // Get the list of downloaded LCM images.
-func (api *ImagesApi) ListImages(page_ *int, limit_ *int, filter_ *string, orderby_ *string, select_ *string, args ...map[string]interface{}) (*import1.ListImagesApiResponse, error) {
+func (api *ImagesApi) ListImages(page_ *int, limit_ *int, filter_ *string, orderby_ *string, select_ *string, args ...map[string]interface{}) (*resources.ListImagesApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -92,7 +92,7 @@ func (api *ImagesApi) ListImages(page_ *int, limit_ *int, filter_ *string, order
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.ListImagesApiResponse)
+	unmarshalledResp := new(resources.ListImagesApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

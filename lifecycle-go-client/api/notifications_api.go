@@ -3,10 +3,10 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import3 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
 	"net/http"
 	"net/url"
 	"strings"
@@ -36,7 +36,7 @@ func NewNotificationsApi(apiClient *client.ApiClient) *NotificationsApi {
 }
 
 // Compute LCM upgrade plan and notifications, given a set of entities to update along with a target version.
-func (api *NotificationsApi) ComputeNotifications(body *[]import3.EntityUpdateSpec, xClusterId *string, args ...map[string]interface{}) (*import2.ComputeNotificationsApiResponse, error) {
+func (api *NotificationsApi) ComputeNotifications(body *[]common.EntityUpdateSpec, xClusterId *string, args ...map[string]interface{}) (*operations.ComputeNotificationsApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -76,13 +76,13 @@ func (api *NotificationsApi) ComputeNotifications(body *[]import3.EntityUpdateSp
 		return nil, err
 	}
 
-	unmarshalledResp := new(import2.ComputeNotificationsApiResponse)
+	unmarshalledResp := new(operations.ComputeNotificationsApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }
 
 // LCM upgrade notification details for UUID.
-func (api *NotificationsApi) GetNotificationById(extId *string, args ...map[string]interface{}) (*import1.GetNotificationsByIdApiResponse, error) {
+func (api *NotificationsApi) GetNotificationById(extId *string, args ...map[string]interface{}) (*resources.GetNotificationsByIdApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -127,7 +127,7 @@ func (api *NotificationsApi) GetNotificationById(extId *string, args ...map[stri
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.GetNotificationsByIdApiResponse)
+	unmarshalledResp := new(resources.GetNotificationsByIdApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

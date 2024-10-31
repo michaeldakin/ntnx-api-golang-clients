@@ -3,8 +3,8 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
 	"net/http"
 	"net/url"
 	"strings"
@@ -34,7 +34,7 @@ func NewInventoryApi(apiClient *client.ApiClient) *InventoryApi {
 }
 
 // Perform an LCM inventory operation.
-func (api *InventoryApi) PerformInventory(xClusterId *string, args ...map[string]interface{}) (*import2.InventoryApiResponse, error) {
+func (api *InventoryApi) PerformInventory(xClusterId *string, args ...map[string]interface{}) (*operations.InventoryApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -74,7 +74,7 @@ func (api *InventoryApi) PerformInventory(xClusterId *string, args ...map[string
 		return nil, err
 	}
 
-	unmarshalledResp := new(import2.InventoryApiResponse)
+	unmarshalledResp := new(operations.InventoryApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

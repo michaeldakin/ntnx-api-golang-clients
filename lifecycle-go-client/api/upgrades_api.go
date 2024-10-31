@@ -3,9 +3,9 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import3 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
 	"net/http"
 	"net/url"
 	"strings"
@@ -35,7 +35,7 @@ func NewUpgradesApi(apiClient *client.ApiClient) *UpgradesApi {
 }
 
 // Perform upgrade operation to a specific target version for discovered LCM entity/entities.
-func (api *UpgradesApi) PerformUpgrade(body *import3.UpgradeSpec, xClusterId *string, args ...map[string]interface{}) (*import2.UpgradeApiResponse, error) {
+func (api *UpgradesApi) PerformUpgrade(body *common.UpgradeSpec, xClusterId *string, args ...map[string]interface{}) (*operations.UpgradeApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -75,7 +75,7 @@ func (api *UpgradesApi) PerformUpgrade(body *import3.UpgradeSpec, xClusterId *st
 		return nil, err
 	}
 
-	unmarshalledResp := new(import2.UpgradeApiResponse)
+	unmarshalledResp := new(operations.UpgradeApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

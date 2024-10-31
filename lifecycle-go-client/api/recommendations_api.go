@@ -3,9 +3,9 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
 	"net/http"
 	"net/url"
 	"strings"
@@ -35,7 +35,7 @@ func NewRecommendationsApi(apiClient *client.ApiClient) *RecommendationsApi {
 }
 
 // Compute LCM upgrade recommendations given a set of entities to update along with a target version.
-func (api *RecommendationsApi) ComputeRecommendations(body *import1.RecommendationSpec, xClusterId *string, args ...map[string]interface{}) (*import2.ComputeRecommendationsApiResponse, error) {
+func (api *RecommendationsApi) ComputeRecommendations(body *resources.RecommendationSpec, xClusterId *string, args ...map[string]interface{}) (*import2.ComputeRecommendationsApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -81,7 +81,7 @@ func (api *RecommendationsApi) ComputeRecommendations(body *import1.Recommendati
 }
 
 // Get LCM upgrade recommendation details for specified UUID.
-func (api *RecommendationsApi) GetRecommendationById(extId *string, args ...map[string]interface{}) (*import1.GetRecommendationByIdApiResponse, error) {
+func (api *RecommendationsApi) GetRecommendationById(extId *string, args ...map[string]interface{}) (*resources.GetRecommendationByIdApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -126,7 +126,7 @@ func (api *RecommendationsApi) GetRecommendationById(extId *string, args ...map[
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.GetRecommendationByIdApiResponse)
+	unmarshalledResp := new(resources.GetRecommendationByIdApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

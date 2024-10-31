@@ -3,8 +3,8 @@ package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import1 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/resources"
 	"net/http"
 	"net/url"
 	"strings"
@@ -34,7 +34,7 @@ func NewStatusApi(apiClient *client.ApiClient) *StatusApi {
 }
 
 // Get the LCM framework status.
-func (api *StatusApi) GetStatus(xClusterId *string, args ...map[string]interface{}) (*import1.GetStatusApiResponse, error) {
+func (api *StatusApi) GetStatus(xClusterId *string, args ...map[string]interface{}) (*resources.GetStatusApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -74,7 +74,7 @@ func (api *StatusApi) GetStatus(xClusterId *string, args ...map[string]interface
 		return nil, err
 	}
 
-	unmarshalledResp := new(import1.GetStatusApiResponse)
+	unmarshalledResp := new(resources.GetStatusApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }

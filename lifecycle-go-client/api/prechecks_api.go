@@ -1,11 +1,11 @@
-//Api classes for lifecycle's golang SDK
+// Api classes for lifecycle's golang SDK
 package api
 
 import (
 	"encoding/json"
-	"github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
-	import3 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
-	import2 "github.com/nutanix/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/client"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/common"
+	"github.com/michaeldakin/ntnx-api-golang-clients/lifecycle-go-client/v4/models/lifecycle/v4/operations"
 	"net/http"
 	"net/url"
 	"strings"
@@ -35,7 +35,7 @@ func NewPrechecksApi(apiClient *client.ApiClient) *PrechecksApi {
 }
 
 // Perform LCM prechecks for the intended update operation.
-func (api *PrechecksApi) PerformPrechecks(body *import3.PrechecksSpec, xClusterId *string, args ...map[string]interface{}) (*import2.PrechecksApiResponse, error) {
+func (api *PrechecksApi) PerformPrechecks(body *common.PrechecksSpec, xClusterId *string, args ...map[string]interface{}) (*operations.PrechecksApiResponse, error) {
 	argMap := make(map[string]interface{})
 	if len(args) > 0 {
 		argMap = args[0]
@@ -75,7 +75,7 @@ func (api *PrechecksApi) PerformPrechecks(body *import3.PrechecksSpec, xClusterI
 		return nil, err
 	}
 
-	unmarshalledResp := new(import2.PrechecksApiResponse)
+	unmarshalledResp := new(operations.PrechecksApiResponse)
 	json.Unmarshal(responseBody.([]byte), &unmarshalledResp)
 	return unmarshalledResp, err
 }
